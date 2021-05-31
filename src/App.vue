@@ -90,6 +90,7 @@ export default {
 <style>
 body {
   margin: 0;
+  font-family: sans-serif;
 }
 input {
   box-sizing: border-box;
