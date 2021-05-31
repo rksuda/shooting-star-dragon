@@ -116,7 +116,7 @@ th {
   padding: 0 10px;
 }
 td {
-  padding: 4px 30px;
+  padding: 6px 30px;
 }
 p {
   font-size: 12px;
