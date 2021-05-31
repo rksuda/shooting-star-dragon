@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <p>デッキ枚数とデッキ内のチューナーの枚数を入力して、シューティング・スター・ドラゴンがチューナーをめくる確率を計算しましょう！</p>
+
     <label>デッキ枚数<input type="number" min="0" v-model.number="deckSize"></label>
     <label>デッキ内のチューナーの枚数<input type="number" min="0" v-model.number="deckTunerSize"></label>
 
@@ -117,9 +119,10 @@ td {
   padding: 4px 30px;
 }
 p {
-  font-size: 14px;
-  text-align: center;
+  font-size: 12px;
   margin-bottom: 20px;
+  padding: 8px;
+  border: 4px solid #68b5d6;
 }
 
 .container {
