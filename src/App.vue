@@ -104,7 +104,7 @@ table {
   width: 100%;
 }
 table caption {
-  margin: 10px 0;
+  margin: 20px 0 10px;
 }
 thead tr {
   border-bottom: 1px solid #333;
