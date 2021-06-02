@@ -15,7 +15,10 @@
     <label>{{ $t('deckTunerSize') }}<input type="number" min="0" v-model.number="deckTunerSize"></label>
 
     <table>
-      <caption>{{ $t('resultCaption') }}</caption>
+      <caption>
+        <span class="caption-main">{{ $t('resultCaption') }}</span><br>
+        <span class="caption-sub">{{ $t('resultCaptionParameter', { deckSize: deckSize, tunerSize: deckTunerSize }) }}</span>
+      </caption>
       <thead>
         <tr>
           <th class="text-center">{{ $t('resultTunerSize') }}</th>
@@ -171,6 +174,9 @@ td {
   margin: 10px 0 20px;
   border: 4px solid #68b5d6;
 }
+.caption-sub {
+  font-size: 12px;
+}
 </style>
 
 <i18n>
@@ -182,6 +188,7 @@ td {
     "deckSize": "デッキ枚数",
     "deckTunerSize": "デッキ内のチューナーの枚数",
     "resultCaption": "チューナーをめくる確率",
+    "resultCaptionParameter": "（デッキ枚数 = {deckSize}、チューナー枚数 = {tunerSize}）",
     "resultTunerSize": "枚数",
     "resultProbability": "確率 (%)",
     "resultCumulativeProbability": "累積確率 (%)"
@@ -193,6 +200,7 @@ td {
     "deckSize": "Remaining Cards in Deck",
     "deckTunerSize": "Remaining Tuners in Deck",
     "resultCaption": "Probabilities to Excavate Tuners",
+    "resultCaptionParameter": "(Cards = {deckSize}, Tuners = {tunerSize})",
     "resultTunerSize": "Tuners",
     "resultProbability": "Prob. (%)",
     "resultCumulativeProbability": "Cum. Prob. (%)"
