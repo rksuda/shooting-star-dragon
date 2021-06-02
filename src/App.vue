@@ -6,21 +6,21 @@
 
     <div class="hint-toggle-wrapper">
       <span class="hint-toggle" @click="onToggleHint">
-        {{ showHint ? $t('App.hideHint') : $t('App.showHint') }}
+        {{ showHint ? $t('hideHint') : $t('showHint') }}
       </span>
     </div>
-    <div v-if="showHint" class="hint">{{ $t('App.hint') }}</div>
+    <div v-if="showHint" class="hint">{{ $t('hint') }}</div>
 
-    <label>{{ $t('App.deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
-    <label>{{ $t('App.deckTunerSize') }}<input type="number" min="0" v-model.number="deckTunerSize"></label>
+    <label>{{ $t('deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
+    <label>{{ $t('deckTunerSize') }}<input type="number" min="0" v-model.number="deckTunerSize"></label>
 
     <table>
-      <caption>{{ $t('App.resultCaption') }}</caption>
+      <caption>{{ $t('resultCaption') }}</caption>
       <thead>
         <tr>
-          <th class="text-center">{{ $t('App.resultTunerSize') }}</th>
-          <th class="text-right">{{ $t('App.resultProbability') }}</th>
-          <th class="text-right">{{ $t('App.resultCumulativeProbability') }}</th>
+          <th class="text-center">{{ $t('resultTunerSize') }}</th>
+          <th class="text-right">{{ $t('resultProbability') }}</th>
+          <th class="text-right">{{ $t('resultCumulativeProbability') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -172,3 +172,30 @@ td {
   border: 4px solid #68b5d6;
 }
 </style>
+
+<i18n>
+{
+  "ja": {
+    "showHint": "ヒントを表示する",
+    "hideHint": "ヒントを隠す",
+    "hint": "デッキ枚数とデッキ内のチューナーの枚数を入力して、シューティング・スター・ドラゴンがチューナーをめくる確率を計算しましょう！",
+    "deckSize": "デッキ枚数",
+    "deckTunerSize": "デッキ内のチューナーの枚数",
+    "resultCaption": "チューナーをめくる確率",
+    "resultTunerSize": "枚数",
+    "resultProbability": "確率 (%)",
+    "resultCumulativeProbability": "累積確率 (%)"
+  },
+  "en": {
+    "showHint": "Show hint",
+    "hideHint": "Hide hint",
+    "hint": "You can easily calculate probabilities that Shooting Star Dragon excavates Tuners from your Deck!",
+    "deckSize": "Remaining Cards in Deck",
+    "deckTunerSize": "Remaining Tuners in Deck",
+    "resultCaption": "Probabilities to Excavate Tuners",
+    "resultTunerSize": "Tuners",
+    "resultProbability": "Prob. (%)",
+    "resultCumulativeProbability": "Cum. Prob. (%)"
+  }
+}
+</i18n>
