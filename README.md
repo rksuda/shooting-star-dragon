@@ -1,24 +1,5 @@
 # shooting-star-dragon
 
-## Project setup
-```
-npm install
-```
+[シューティング・スター・ドラゴン](https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=9117)がチューナーをめくる確率を計算するためのアプリです。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+このアプリは[こちら](https://shooting-star-dragon.rickdevel.net/)にホストされています。
