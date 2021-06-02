@@ -4,10 +4,11 @@
       <language-selector :languages="languages" @select="handleSelectLanguage" />
     </div>
 
-    <p class="hint-toggle" @click="onToggleHint">
-      <span v-if="showHint">{{ $t('App.hideHint') }}</span>
-      <span v-else>{{ $t('App.showHint') }}</span>
-    </p>
+    <div class="hint-toggle-wrapper">
+      <span class="hint-toggle" @click="onToggleHint">
+        {{ showHint ? $t('App.hideHint') : $t('App.showHint') }}
+      </span>
+    </div>
     <div v-if="showHint" class="hint">{{ $t('App.hint') }}</div>
 
     <label>{{ $t('App.deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
@@ -153,11 +154,13 @@ td {
   display: flex;
   justify-content: flex-end;
 }
+.hint-toggle-wrapper {
+  margin: 0 0 10px;
+}
 .hint-toggle {
   font-size: 12px;
   color: #333;
   text-decoration: underline;
-  margin: 0 0 10px;
 }
 .hint-toggle:hover {
   cursor: pointer;
@@ -167,6 +170,5 @@ td {
   padding: 8px;
   margin: 10px 0 20px;
   border: 4px solid #68b5d6;
-  position: relative;
 }
 </style>
