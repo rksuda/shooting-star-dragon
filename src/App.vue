@@ -14,101 +14,61 @@
     <label>{{ $t('deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
     <label>{{ $t('deckTunerSize') }}<input type="number" min="0" v-model.number="deckTunerSize"></label>
 
-    <table>
-      <caption>
-        <span class="caption-main">{{ $t('resultCaption') }}</span><br>
-        <span class="caption-sub">{{ $t('resultCaptionParameter', { deckSize: deckSize, tunerSize: deckTunerSize }) }}</span>
-      </caption>
-      <thead>
-        <tr>
-          <th class="text-center">{{ $t('resultTunerSize') }}</th>
-          <th class="text-right">{{ $t('resultProbability') }}</th>
-          <th class="text-right">{{ $t('resultCumulativeProbability') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="n in [5, 4, 3, 2, 1, 0]" :key="n">
-          <th class="text-center">{{ n }}</th>
-          <td class="text-right">{{ formatProbabilityOf(n) }}</td>
-          <td class="text-right">{{ formatCumulativeProbabilityOf(n) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <p class="result-header">{{ $t('resultHeader') }}</p>
+
+    <div class="result-wrapper">
+      <span class="result-thumbtack" @click="onThumbtackResult">
+        <i class="fas fa-thumbtack"></i>
+      </span>
+      <result-table :deckSize="deckSize" :deckTunerSize="deckTunerSize" />
+    </div>
+
+    <div class="snapshot-wrapper" v-for="snapshot in snapshots" :key="snapshot.key">
+      <result-table :deckSize="snapshot.deckSize" :deckTunerSize="snapshot.deckTunerSize" />
+    </div>
   </div>
 </template>
 
 <script>
-import { combinations } from 'mathjs'
 import LanguageSelector from './components/LanguageSelector.vue'
+import ResultTable from './components/ResultTable.vue';
 
 export default {
   name: 'App',
   components: {
-    LanguageSelector
+    LanguageSelector,
+    ResultTable
   },
   data() {
     return {
-      // Shooting Star Dragon excavates top 5 cards of your deck.
-      excavationSize: 5,
       deckSize: 15,
       deckTunerSize: 7,
-      precision: 1,
       languages: [
         { text: '日本語', value: 'ja' },
         { text: 'English', value: 'en' },
       ],
       showHint: false,
+
+      // Array of { deckSize: Number, deckTunerSize: Number, key: String }
+      snapshots: [],
     };
   },
-  computed: {
-    denominator() {
-      return combinations(this.deckSize, this.excavationSize);
-    }
-  },
   methods: {
-    probabilityOf(excavatedTunerSize) {
-      const deckNonTunerSize = this.deckSize - this.deckTunerSize;
-      const excavatedNonTunerSize = this.excavationSize - excavatedTunerSize;
-
-      // Invalid input patterns
-      if (
-        excavatedTunerSize < 0 ||
-        excavatedTunerSize > this.excavationSize ||
-        this.deckSize <= 0 ||
-        this.deckTunerSize <= 0 ||
-        this.deckSize < this.deckTunerSize ||
-        this.deckSize < this.excavationSize ||
-        deckNonTunerSize < excavatedNonTunerSize
-      ) {
-        return 0;
-      }
-
-      const tuner = combinations(this.deckTunerSize, excavatedTunerSize);
-      const nonTuner = combinations(deckNonTunerSize, excavatedNonTunerSize);
-      return tuner * nonTuner / this.denominator;
-    },
-    cumulativeProbabilityOf(minimumExcavatedTunerSize) {
-      let cumulativeProbability = 0;
-
-      for (let excavatedTunerSize = minimumExcavatedTunerSize; excavatedTunerSize <= this.excavationSize; excavatedTunerSize++) {
-        cumulativeProbability += this.probabilityOf(excavatedTunerSize);
-      }
-
-      return cumulativeProbability;
-    },
-    formatProbabilityOf(excavatedTunerSize) {
-      return (this.probabilityOf(excavatedTunerSize) * 100).toFixed(this.precision);
-    },
-    formatCumulativeProbabilityOf(minimumExcavatedTunerSize) {
-      return (this.cumulativeProbabilityOf(minimumExcavatedTunerSize) * 100).toFixed(this.precision);
-    },
     handleSelectLanguage({ language }) {
       this.$i18n.locale = language;
     },
     onToggleHint() {
       this.showHint = !this.showHint;
-    }
-  }
+    },
+    onThumbtackResult() {
+      console.log('snapshot');
+      this.snapshots.push({
+        deckSize: this.deckSize,
+        deckTunerSize: this.deckTunerSize,
+        key: `${this.deckSize}-${this.deckTunerSize}`,
+      });
+    },
+  },
 }
 </script>
 
@@ -174,8 +134,26 @@ td {
   margin: 10px 0 20px;
   border: 4px solid #68b5d6;
 }
-.caption-sub {
-  font-size: 12px;
+.result-header {
+  text-align: center;
+  margin: 20px 0 20px;
+}
+.result-wrapper {
+  position: relative;
+  margin-top: 16px;
+}
+.result-thumbtack {
+  position: absolute;
+  top: 0px;
+  right: 2px;
+}
+.result-thumbtack:hover {
+  cursor: pointer;
+}
+.snapshot-wrapper {
+  border-top: 1px dashed #333;
+  margin: 4px 0 0;
+  padding: 8px 0 0;
 }
 </style>
 
@@ -187,11 +165,7 @@ td {
     "hint": "デッキ枚数とデッキ内のチューナーの枚数を入力して、シューティング・スター・ドラゴンがチューナーをめくる確率を計算しましょう！",
     "deckSize": "デッキ枚数",
     "deckTunerSize": "デッキ内のチューナーの枚数",
-    "resultCaption": "チューナーをめくる確率",
-    "resultCaptionParameter": "（デッキ枚数 = {deckSize}、チューナー枚数 = {tunerSize}）",
-    "resultTunerSize": "枚数",
-    "resultProbability": "確率 (%)",
-    "resultCumulativeProbability": "累積確率 (%)"
+    "resultHeader": "チューナーをめくる確率"
   },
   "en": {
     "showHint": "Show hint",
@@ -199,11 +173,7 @@ td {
     "hint": "You can easily calculate probabilities that Shooting Star Dragon excavates Tuners from your Deck!",
     "deckSize": "Remaining Cards in Deck",
     "deckTunerSize": "Remaining Tuners in Deck",
-    "resultCaption": "Probabilities to Excavate Tuners",
-    "resultCaptionParameter": "(Cards = {deckSize}, Tuners = {tunerSize})",
-    "resultTunerSize": "Tuners",
-    "resultProbability": "Prob. (%)",
-    "resultCumulativeProbability": "Cum. Prob. (%)"
+    "resultHeader": "Probabilities to Excavate Tuners"
   }
 }
 </i18n>
