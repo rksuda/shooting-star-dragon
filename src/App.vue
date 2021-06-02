@@ -100,11 +100,7 @@ export default {
 }
 </script>
 
-<style>
-body {
-  margin: 0;
-  font-family: sans-serif;
-}
+<style scoped>
 input {
   box-sizing: border-box;
   width: 100%;
