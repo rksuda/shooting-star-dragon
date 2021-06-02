@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div class="align-right">
+      <language-selector :languages="languages" @select="handleSelectLanguage" />
+    </div>
+
     <p>{{ $t('App.message') }}</p>
 
     <label>{{ $t('App.deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
@@ -27,10 +31,12 @@
 
 <script>
 import { combinations } from 'mathjs'
+import LanguageSelector from './components/LanguageSelector.vue'
 
 export default {
   name: 'App',
   components: {
+    LanguageSelector
   },
   data() {
     return {
@@ -39,6 +45,10 @@ export default {
       deckSize: 15,
       deckTunerSize: 7,
       precision: 1,
+      languages: [
+        { text: '日本語', value: 'ja' },
+        { text: 'English', value: 'en' },
+      ],
     };
   },
   computed: {
@@ -82,6 +92,9 @@ export default {
     },
     formatCumulativeProbabilityOf(minimumExcavatedTunerSize) {
       return (this.cumulativeProbabilityOf(minimumExcavatedTunerSize) * 100).toFixed(this.precision);
+    },
+    handleSelectLanguage({ language }) {
+      this.$i18n.locale = language;
     }
   }
 }
@@ -137,5 +150,9 @@ p {
 }
 .text-right {
   text-align: right;
+}
+.align-right {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
