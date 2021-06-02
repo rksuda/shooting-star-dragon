@@ -1,7 +1,9 @@
 export default {
   ja: {
     App: {
-      message: 'デッキ枚数とデッキ内のチューナーの枚数を入力して、シューティング・スター・ドラゴンがチューナーをめくる確率を計算しましょう！',
+      showHint: 'ヒントを表示する',
+      hideHint: 'ヒントを隠す',
+      hint: 'デッキ枚数とデッキ内のチューナーの枚数を入力して、シューティング・スター・ドラゴンがチューナーをめくる確率を計算しましょう！',
       deckSize: 'デッキ枚数',
       deckTunerSize: 'デッキ内のチューナーの枚数',
       resultCaption: 'チューナーをめくる確率',
@@ -12,7 +14,9 @@ export default {
   },
   en: {
     App: {
-      message: 'You can easily calculate probabilities that Shooting Star Dragon excavates Tuners from your Deck!',
+      showHint: 'Show hint',
+      hideHint: 'Hide hint',
+      hint: 'You can easily calculate probabilities that Shooting Star Dragon excavates Tuners from your Deck!',
       deckSize: 'Remaining Cards in Deck',
       deckTunerSize: 'Remaining Tuners in Deck',
       resultCaption: 'Probabilities to Excavate Tuners',

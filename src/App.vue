@@ -4,7 +4,11 @@
       <language-selector :languages="languages" @select="handleSelectLanguage" />
     </div>
 
-    <p>{{ $t('App.message') }}</p>
+    <p class="hint-toggle" @click="onToggleHint">
+      <span v-if="showHint">{{ $t('App.hideHint') }}</span>
+      <span v-else>{{ $t('App.showHint') }}</span>
+    </p>
+    <div v-if="showHint" class="hint">{{ $t('App.hint') }}</div>
 
     <label>{{ $t('App.deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
     <label>{{ $t('App.deckTunerSize') }}<input type="number" min="0" v-model.number="deckTunerSize"></label>
@@ -49,6 +53,7 @@ export default {
         { text: '日本語', value: 'ja' },
         { text: 'English', value: 'en' },
       ],
+      showHint: false,
     };
   },
   computed: {
@@ -95,6 +100,9 @@ export default {
     },
     handleSelectLanguage({ language }) {
       this.$i18n.locale = language;
+    },
+    onToggleHint() {
+      this.showHint = !this.showHint;
     }
   }
 }
@@ -129,12 +137,6 @@ th {
 td {
   padding: 6px 30px;
 }
-p {
-  font-size: 12px;
-  margin-bottom: 20px;
-  padding: 8px;
-  border: 4px solid #68b5d6;
-}
 
 .container {
   max-width: 800px;
@@ -150,5 +152,21 @@ p {
 .align-right {
   display: flex;
   justify-content: flex-end;
+}
+.hint-toggle {
+  font-size: 12px;
+  color: #333;
+  text-decoration: underline;
+  margin: 0 0 10px;
+}
+.hint-toggle:hover {
+  cursor: pointer;
+}
+.hint {
+  font-size: 12px;
+  padding: 8px;
+  margin: 10px 0 20px;
+  border: 4px solid #68b5d6;
+  position: relative;
 }
 </style>
