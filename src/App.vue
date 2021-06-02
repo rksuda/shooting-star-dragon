@@ -1,22 +1,22 @@
 <template>
   <div class="container">
-    <p>デッキ枚数とデッキ内のチューナーの枚数を入力して、シューティング・スター・ドラゴンがチューナーをめくる確率を計算しましょう！</p>
+    <p>{{ $t('App.message') }}</p>
 
-    <label>デッキ枚数<input type="number" min="0" v-model.number="deckSize"></label>
-    <label>デッキ内のチューナーの枚数<input type="number" min="0" v-model.number="deckTunerSize"></label>
+    <label>{{ $t('App.deckSize') }}<input type="number" min="0" v-model.number="deckSize"></label>
+    <label>{{ $t('App.deckTunerSize') }}<input type="number" min="0" v-model.number="deckTunerSize"></label>
 
     <table>
-      <caption>チューナーをめくる確率</caption>
+      <caption>{{ $t('App.resultCaption') }}</caption>
       <thead>
         <tr>
-          <th class="text-center">枚数</th>
-          <th class="text-right">確率（%）</th>
-          <th class="text-right">累積確率（%）</th>
+          <th class="text-center">{{ $t('App.resultTunerSize') }}</th>
+          <th class="text-right">{{ $t('App.resultProbability') }}</th>
+          <th class="text-right">{{ $t('App.resultCumulativeProbability') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="n in [5, 4, 3, 2, 1, 0]" :key="n">
-          <th class="text-center">{{ n }}枚</th>
+          <th class="text-center">{{ n }}</th>
           <td class="text-right">{{ formatProbabilityOf(n) }}</td>
           <td class="text-right">{{ formatCumulativeProbabilityOf(n) }}</td>
         </tr>
@@ -114,6 +114,7 @@ tbody tr:nth-child(odd) {
   background: #e3ecf5;
 }
 th {
+  font-size: 14px;
   padding: 0 10px;
 }
 td {
