@@ -58,5 +58,6 @@ li:last-child::after {
 
 .active {
   font-weight: bold;
+  text-decoration: underline;
 }
 </style>
