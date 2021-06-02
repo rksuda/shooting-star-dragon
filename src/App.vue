@@ -5,7 +5,7 @@
     </div>
 
     <div class="hint-toggle-wrapper">
-      <span class="hint-toggle" @click="onToggleHint">
+      <span class="hint-toggle" @click="handleToggleHint">
         {{ showHint ? $t('hideHint') : $t('showHint') }}
       </span>
     </div>
@@ -17,19 +17,23 @@
     <p class="result-header">{{ $t('resultHeader') }}</p>
 
     <div class="result-wrapper">
-      <span class="result-thumbtack" @click="onThumbtackResult">
+      <span class="result-command-icon" @click="handleAddSnapshot">
         <i class="fas fa-thumbtack"></i>
       </span>
       <result-table :deckSize="deckSize" :deckTunerSize="deckTunerSize" />
     </div>
 
     <div class="snapshot-wrapper" v-for="snapshot in snapshots" :key="snapshot.key">
+      <span class="result-command-icon" @click="handleDeleteSnapshotByKey(snapshot.key)">
+        <i class="fas fa-times"></i>
+      </span>
       <result-table :deckSize="snapshot.deckSize" :deckTunerSize="snapshot.deckTunerSize" />
     </div>
   </div>
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
 import LanguageSelector from './components/LanguageSelector.vue'
 import ResultTable from './components/ResultTable.vue';
 
@@ -57,16 +61,22 @@ export default {
     handleSelectLanguage({ language }) {
       this.$i18n.locale = language;
     },
-    onToggleHint() {
+    handleToggleHint() {
       this.showHint = !this.showHint;
     },
-    onThumbtackResult() {
-      console.log('snapshot');
+    handleAddSnapshot() {
       this.snapshots.push({
         deckSize: this.deckSize,
         deckTunerSize: this.deckTunerSize,
-        key: `${this.deckSize}-${this.deckTunerSize}`,
+        key: uuidv4(),
       });
+    },
+    handleDeleteSnapshotByKey(key) {
+      const index = this.snapshots.findIndex(snapshot => snapshot.key === key);
+
+      if (index >= 0) {
+        this.snapshots.splice(index, 1);
+      }
     },
   },
 }
@@ -142,18 +152,19 @@ td {
   position: relative;
   margin-top: 16px;
 }
-.result-thumbtack {
+.result-command-icon {
   position: absolute;
   top: 0px;
   right: 2px;
 }
-.result-thumbtack:hover {
+.result-command-icon:hover {
   cursor: pointer;
 }
 .snapshot-wrapper {
+  position: relative;
   border-top: 1px dashed #333;
   margin: 4px 0 0;
-  padding: 8px 0 0;
+  padding: 16px 0 0;
 }
 </style>
 
